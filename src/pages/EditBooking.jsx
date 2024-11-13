@@ -3,9 +3,10 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { AuthContext } from "../components/context-providers/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { createBooking } from '../features/bookings/bookingsSlice'
+import { updateBooking } from '../features/bookings/bookingsSlice'
 
-export default function CreateBooking() {
+
+export default function EditBooking() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { currentUser } = useContext(AuthContext);
@@ -27,7 +28,7 @@ export default function CreateBooking() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = { seatType, date, time, phoneNumber, email, userId: currentUser.uid };
-        dispatch(createBooking(data));
+        dispatch(updateBooking(data));
     }
 
     return (

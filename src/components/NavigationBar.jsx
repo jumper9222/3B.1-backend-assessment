@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 import { useContext } from "react";
 
 export default function NavigationBar() {
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser, setCurrentUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogin = () => {
@@ -14,6 +14,7 @@ export default function NavigationBar() {
 
     const handleLogout = () => {
         auth.signOut();
+        setCurrentUser(null);
         navigate('/')
     }
 

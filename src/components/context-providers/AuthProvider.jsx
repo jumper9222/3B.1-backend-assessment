@@ -11,10 +11,11 @@ export default function AuthProvider({ children }) {
         return auth.onAuthStateChanged((user) => {
             setCurrentUser(user);
             setLoading(false);
+            console.log(user)
         })
     }, []);
 
-    const value = { currentUser }
+    const value = { currentUser, setCurrentUser }
 
     return (
         <AuthContext.Provider value={value}>

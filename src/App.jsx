@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AuthContext } from "./components/context-providers/AuthProvider";
 import CreateBooking from "./pages/CreateBooking";
 import AboutPage from "./pages/AboutPage";
+import EditBooking from "./pages/EditBooking";
 
 export default function App() {
     const { currentUser } = useContext(AuthContext);
@@ -18,6 +19,7 @@ export default function App() {
                     <Route path="/" element={currentUser ? <Dashboard /> : <AuthPage />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/book" element={<CreateBooking />} />
+                    <Route path="/edit/:bookingId" element={<EditBooking />} />
                     <Route path="/about" element={<AboutPage />} />
                 </Route>
             </Routes>
