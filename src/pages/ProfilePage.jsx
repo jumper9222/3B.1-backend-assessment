@@ -12,11 +12,11 @@ export default function ProfilePage() {
 
     useEffect(() => {
         if (!currentUser) {
-            navigate('/')
+            navigate('/login')
         }
     }, [currentUser])
 
-    const [displayName, setDisplayName] = useState(currentUser.displayName);
+    const [displayName, setDisplayName] = useState(currentUser?.displayName || "");
     const [file, setFile] = useState(null);
     const [editMode, setEditMode] = useState(false);
 
@@ -55,9 +55,9 @@ export default function ProfilePage() {
                 <Col className="d-flex flex-column justify-content-center">
                     <Form onSubmit={handleSubmit}>
                         <h6>Email</h6>
-                        <p className="mb-4">{currentUser.email}</p>
+                        <p className="mb-4">{currentUser?.email || "N/A"}</p>
                         <h6>Phone Number</h6>
-                        <p className="mb-4">{currentUser.phoneNumber ? currentUser.phoneNumber : "N/A"}</p>
+                        <p className="mb-4">{currentUser?.phoneNumber || "N/A"}</p>
                         <h6>Display Name</h6>
                         {
                             editMode ?
@@ -67,7 +67,7 @@ export default function ProfilePage() {
                                     value={displayName}
                                     onChange={(e) => setDisplayName(e.target.value)}
                                 />
-                                : <p>{currentUser.displayName ? currentUser.displayName : "N/A"}</p>
+                                : <p>{currentUser?.displayName || "N/A"}</p>
                         }
                         {
                             editMode &&
@@ -87,9 +87,8 @@ export default function ProfilePage() {
                     <Image
                         height={300}
                         width={300}
-                        src={currentUser.photoURL
-                            ? `${currentUser.photoURL}`
-                            : `https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/http%3A%2F%2Fplacekitten.com%2F250%2F250`} roundedCircle
+                        src={currentUser?.photoURL
+                            || `https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/http%3A%2F%2Fplacekitten.com%2F250%2F250`} roundedCircle
                     />
                 </Col>
             </Row>
