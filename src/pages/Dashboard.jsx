@@ -6,22 +6,22 @@ import { fetchBookingsByUser } from "../features/bookings/bookingsSlice";
 import EmptyBookingsRow from "../components/EmptyBookingsRow";
 import { AuthContext } from "../components/context-providers/AuthProvider";
 import LoadingRow from "../components/LoadingRow";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const bookings = useSelector((state) => state.bookings.bookings);
     const loading = useSelector((state) => state.bookings.loading);
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
         if (!currentUser) {
-            navigate('/')
+            navigate('/login')
+        } else {
+            dispatch(fetchBookingsByUser(currentUser.uid));
         }
     }, [currentUser])
-
-    useEffect(() => {
-        dispatch(fetchBookingsByUser(currentUser.uid));
-    }, [dispatch, currentUser.uid]);
 
     return (
         <div
