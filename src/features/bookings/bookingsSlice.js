@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://coworking-database-api.vercel.app";
 
 export const createBooking = createAsyncThunk(
     "bookings/createBooking",
@@ -20,10 +20,28 @@ export const fetchBookingsByUser = createAsyncThunk(
         return response.data;
     })
 
+export const fetchBookingById = createAsyncThunk(
+    "bookings/fetchBookingById",
+    async (data) => {
+        const response = await axios.get(`${BASE_URL}/booking/${data.userId}/${data.bookingId}`)
+        console.log(response.data);
+        return response.data;
+    }
+)
+
 export const updateBooking = createAsyncThunk(
     "bookings/updateBooking",
     async (bookingDetails) => {
         const response = await axios.put(`${BASE_URL}/booking/${bookingDetails.id}`, bookingDetails);
+        console.log(response.data);
+        return response.data;
+    }
+)
+
+export const deleteBooking = createAsyncThunk(
+    "bookings/deleteBooking",
+    async (data) => {
+        const response = await axios.delete(`${BASE_URL}/booking/${data.bookingId}`, { data: { userId: data.userId } });
         console.log(response.data);
         return response.data;
     }
@@ -34,36 +52,52 @@ const bookingsSlice = createSlice({
     initialState: {
         bookings: [],
         loading: false,
-        currentBooking: {}
     },
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(createBooking.pending, (state) => {
             state.loading = true;
-            console.log(state.loading)
+            console.log(`Loading: ${state.loading}`)
         });
         builder.addCase(createBooking.fulfilled, (state, action) => {
             state.currentBooking = [...state.bookings, action.payload]
             state.loading = false;
-            console.log(state.currentBooking, state.loading)
+            console.log(`Loading: ${state.loading}`)
         });
         builder.addCase(fetchBookingsByUser.pending, (state) => {
             state.loading = true;
-            console.log(state.loading);
-        })
+            console.log(`Loading: ${state.loading}`);
+        });
         builder.addCase(fetchBookingsByUser.fulfilled, (state, action) => {
             state.bookings = action.payload;
             state.loading = false;
-            console.log(state.bookings, state.loading)
+            console.log(`Loading: ${state.loading}`)
+        });
+        builder.addCase(fetchBookingById.pending, (state) => {
+            state.loading = true;
+            console.log(`Loading: ${state.loading}`)
+        });
+        builder.addCase(fetchBookingById.fulfilled, (state) => {
+            state.loading = false;
+            console.log(`Loading: ${state.loading}`)
         });
         builder.addCase(updateBooking.pending, (state) => {
             state.loading = true;
-            console.log(state.loading);
-        })
+            console.log(`Loading: ${state.loading}`);
+        });
         builder.addCase(updateBooking.fulfilled, (state, action) => {
             state.currentBooking = action.payload;
             state.loading = false;
-            console.log(state.currentBooking, state.loading)
+            console.log(`Loading: ${state.loading}`)
+        });
+        builder.addCase(deleteBooking.pending, (state) => {
+            state.loading = true;
+            console.log(`Loading: ${state.loading}`);
+        });
+        builder.addCase(deleteBooking.fulfilled, (state, action) => {
+            state.currentBooking = action.payload;
+            state.loading = false;
+            console.log(`Loading: ${state.loading}`)
         });
     }
 })

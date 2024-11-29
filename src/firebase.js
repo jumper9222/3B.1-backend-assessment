@@ -2,17 +2,18 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 const {
     VITE_API_KEY,
     VITE_AUTH_DOMAIN,
     VITE_PROJECT_ID,
     VITE_STORAGE_BUCKET,
     VITE_MESSAGING_SENDER_ID,
-    VITE_APP_ID
+    VITE_APP_ID,
 } = import.meta.env;
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -28,4 +29,4 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
-
+export const storage = getStorage(app);

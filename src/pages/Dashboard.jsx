@@ -5,12 +5,19 @@ import { useContext, useEffect } from "react";
 import { fetchBookingsByUser } from "../features/bookings/bookingsSlice";
 import EmptyBookingsRow from "../components/EmptyBookingsRow";
 import { AuthContext } from "../components/context-providers/AuthProvider";
+import LoadingRow from "../components/LoadingRow";
 
 export default function Dashboard() {
     const dispatch = useDispatch();
     const bookings = useSelector((state) => state.bookings.bookings);
     const loading = useSelector((state) => state.bookings.loading);
     const { currentUser } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (!currentUser) {
+            navigate('/')
+        }
+    }, [currentUser])
 
     useEffect(() => {
         dispatch(fetchBookingsByUser(currentUser.uid));
@@ -22,6 +29,7 @@ export default function Dashboard() {
                 paddingTop: "84px",
                 paddingBottom: "84px",
                 backgroundColor: "#f5f5f5",
+                minHeight: "100vh"
             }}
         >
             <div
@@ -32,12 +40,13 @@ export default function Dashboard() {
             </div>
             <Row className="mx-5 my-3 pb-1 border-bottom">
                 <Col sm={2}><h6>Booking Date</h6></Col>
-                <Col sm={2}><h6>Duration</h6></Col>
+                <Col sm={2}><h6>Start Time</h6></Col>
+                <Col sm={2}><h6>End Time</h6></Col>
                 <Col><h6>Booking Type</h6></Col>
                 <Col sm={2}><h6>Status</h6></Col>
                 <Col sm={1} className="d-flex justify-content-center"><h6>Edit</h6></Col>
             </Row>
-            {loading && <p></p>}
+            {loading && Array(5).fill(0).map((_, index) => <LoadingRow key={index} />)}
             {bookings.length === 0 && !loading && <EmptyBookingsRow />}
             {
                 bookings.length > 0 && !loading &&

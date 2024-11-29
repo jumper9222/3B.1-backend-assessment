@@ -1,53 +1,9 @@
-import { useEffect, useState } from "react";
-import { Button, Modal, Form, FloatingLabel, Row, Col } from "react-bootstrap";
-import lampPic from '../assets/lamp-pic.jpg'
-import { createUserWithEmailAndPassword, getAuth, signInWithPopup } from "firebase/auth";
-import { provider } from "../firebase"
-import { GoogleAuthProvider } from "firebase/auth/web-extension";
 
-export default function AuthPage() {
-    const [showModal, setShowModal] = useState("")
-
-    const showSignupModal = () => {
-        setShowModal("signup")
-    }
-
-    const handleClose = () => {
-        setShowModal("")
-    }
-
-    return (
-        <div
-            className=""
-            style={{
-                backgroundImage: `url(${lampPic})`,
-                backgroundSize: 'auto 100%',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                minHeight: '100vh',
-                overflow: 'visible'
-            }}
-        >
-            <Row style={{ height: '100vh' }}>
-                <Col md={1}></Col>
-                <Col className="mt-5 ms-5 d-flex flex-column justify-content-center" lg={7}>
-                    <h1 className="mb-3">Get WERK done <br />at WERK Co-WERKing Space</h1>
-                    <div>
-                        <Button
-                            onClick={showSignupModal}
-                            variant="primary"
-                        >
-                            Create an account now and start WERKing
-                        </Button>
-                    </div>
-                </Col>
-            </Row>
-            <SignUpModal show={showModal === "signup"} handleClose={handleClose} />
-        </div>
-    )
-}
-
-function SignUpModal({ show, handleClose }) {
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useState, useEffect } from "react";
+import { Modal, Button, Form, FloatingLabel } from "react-bootstrap";
+import { provider } from "../firebase";
+export default function SignUpModal({ show, handleClose }) {
     const auth = getAuth()
 
     const [email, setEmail] = useState("")

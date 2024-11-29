@@ -14,7 +14,7 @@ export default function Login() {
     const auth = getAuth();
     const navigate = useNavigate();
 
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser, setAuthToken } = useContext(AuthContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -41,7 +41,8 @@ export default function Login() {
                 // The signed-in user info.
                 const user = result.user;
                 // IdP data available using getAdditionalUserInfo(result)
-                console.log(token, user)
+                setAuthToken(token);
+                console.log(user, token)
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;

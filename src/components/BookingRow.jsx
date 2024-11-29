@@ -11,7 +11,8 @@ export default function BookingRow({ booking }) {
         <>
             <Row className="mx-5 my-3 pb-2 border-bottom">
                 <Col sm={2}>{formattedDate}</Col>
-                <Col sm={2}>{booking.time}</Col>
+                <Col sm={2}>{booking.start_time}</Col>
+                <Col sm={2}>{booking.end_time}</Col>
                 <Col>{booking.title}</Col>
                 <Col sm={2}>{
                     bookingDate > currentDate ? (
@@ -29,11 +30,19 @@ export default function BookingRow({ booking }) {
                     )}</Col>
                 <Col sm={1} className="d-flex justify-content-center">
                     <Button
+                        className="me-1"
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => navigate(`/edit/${booking.id}`)}
+                    >
+                        <i className="bi bi-pencil-square"></i>
+                    </Button>
+                    <Button
                         variant="secondary"
                         size="sm"
                         onClick={() => navigate(`/booking/${booking.id}`)}
                     >
-                        <i className="bi bi-pencil-square"></i>
+                        <i className="bi bi-info-circle"></i>
                     </Button>
                 </Col>
             </Row>
