@@ -7,9 +7,7 @@ const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
-    const [authToken, setAuthToken] = useState(null);
     const [loading, setLoading] = useState(true);
-    // const [connectedToGoogleCalendar, setConnectedToGoogleCalendar] = useState(false)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -17,12 +15,10 @@ export default function AuthProvider({ children }) {
             setCurrentUser(user);
             setLoading(false);
             dispatch(checkConnectionStatus())
-            // .then((response) => setConnectedToGoogleCalendar(response.payload.data))
-            // .catch((error) => console.error(error));
         })
     }, []);
 
-    const value = { currentUser, setCurrentUser, authToken, setAuthToken };
+    const value = { currentUser, setCurrentUser };
 
     return (
         <AuthContext.Provider value={value}>
