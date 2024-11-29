@@ -26,7 +26,12 @@ export default function BookingInfo() {
             const fetchId = { bookingId, userId: currentUser.uid }
             dispatch(fetchBookingById(fetchId)).then(
                 (response) => {
-                    setCurrentBooking(response.payload)
+                    console.log(response)
+                    if (response.payload) {
+                        setCurrentBooking(response.payload)
+                    } else {
+                        navigate('/404')
+                    }
                 }
             )
         }

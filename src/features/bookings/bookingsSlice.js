@@ -86,7 +86,11 @@ const bookingsSlice = createSlice({
             console.log(`Loading: ${state.loading}`);
         });
         builder.addCase(updateBooking.fulfilled, (state, action) => {
-            state.currentBooking = action.payload;
+            state.bookings = state.bookings.map((booking) => {
+                if (booking.id === action.payload.id) {
+                    return action.payload
+                } else return action.payload;
+            });
             state.loading = false;
             console.log(`Loading: ${state.loading}`)
         });
@@ -95,7 +99,9 @@ const bookingsSlice = createSlice({
             console.log(`Loading: ${state.loading}`);
         });
         builder.addCase(deleteBooking.fulfilled, (state, action) => {
-            state.currentBooking = action.payload;
+            state.bookings = state.bookings.filter(booking => {
+                booking.id !== action.payload.id
+            });
             state.loading = false;
             console.log(`Loading: ${state.loading}`)
         });

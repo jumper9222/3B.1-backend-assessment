@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 export default function BookingRow({ booking }) {
     const navigate = useNavigate();
     const currentDate = new Date(Date.now());
-    const bookingDate = new Date(booking.date);
-    const formattedDate = bookingDate.toLocaleDateString('en-GB');
+    const bookingDate = booking.date.substring(0, 10)
+    const bookingStartTime = new Date(`${bookingDate}T${booking.start_time}`);
+    const bookingEndTime = new Date(`${bookingDate}T${booking.end_time}`);
+    const formattedDate = bookingStartTime.toLocaleDateString('en-GB');
+    console.log(booking.date, booking.start_time)
 
     return (
         <>
@@ -15,11 +18,11 @@ export default function BookingRow({ booking }) {
                 <Col sm={2}>{booking.end_time}</Col>
                 <Col>{booking.title}</Col>
                 <Col sm={2}>{
-                    bookingDate > currentDate ? (
+                    bookingStartTime > currentDate ? (
                         <>
                             <i className="bi bi-circle-fill text-warning"></i>{' Upcoming'}
                         </>
-                    ) : bookingDate < currentDate ? (
+                    ) : bookingEndTime < currentDate ? (
                         <>
                             <i className="bi bi-circle-fill text-secondary"></i>{' Completed'}
                         </>
